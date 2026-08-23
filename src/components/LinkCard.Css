@@ -1,0 +1,117 @@
+.link-card {
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.link-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.link-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link-card-icon img {
+  border-radius: 6px;
+}
+
+.link-card-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.link-card-domain {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.link-card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.link-card-tag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.6);
+  color: var(--text);
+}
+
+.type-tag {
+  background: rgba(108, 76, 255, 0.15);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.category-tag {
+  background: rgba(0,0,0,0.08);
+  color: var(--text);
+}
+
+/* Actions */
+.link-card-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.favorite-btn,
+.trash-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.2);
+  color: var(--accent);
+}
+
+.favorite-btn.active {
+  color: var(--accent);
+}
+
+.trash-btn:hover {
+  transform: scale(1.2);
+  color: #d9534f;
+}
+.restore-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 15px;
+  color: #28a745; /* green */
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.restore-btn:hover {
+  transform: scale(1.1);
+  color: #218838;
+}
+.delete-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 15px;
+  color: #dc3545; /* red */
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+  color: #a71d2a;
+}
