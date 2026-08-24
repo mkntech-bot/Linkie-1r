@@ -17,8 +17,14 @@ export default function Dashboard() {
   const [search, setSearch] = useState('');
   const [theme, setTheme] = useState('violet'); // violet, black, white
 
-  const displayName = profile?.display_name || currentUser?.user_metadata?.full_name || 'there';
-  const avatarUrl = profile?.avatar_url || currentUser?.user_metadata?.avatar_url;
+  const displayName =
+    profile?.display_name ||
+    currentUser?.user_metadata?.full_name ||
+    'there';
+
+  const avatarUrl =
+    profile?.avatar_url ||
+    currentUser?.user_metadata?.avatar_url;
 
   useEffect(() => {
     if (profile?.id) {
@@ -35,6 +41,7 @@ export default function Dashboard() {
         .select('*')
         .eq('user_id', profile.id)
         .order('created_at', { ascending: false }),
+
       supabase
         .from('categories')
         .select('*')
@@ -42,8 +49,14 @@ export default function Dashboard() {
         .order('name')
     ]);
 
-    if (!linksRes.error) setLinks(linksRes.data);
-    if (!categoriesRes.error) setCategories(categoriesRes.data);
+    if (!linksRes.error) {
+      setLinks(linksRes.data);
+    }
+
+    if (!categoriesRes.error) {
+      setCategories(categoriesRes.data);
+    }
+
     setLoading(false);
   }
 
@@ -51,24 +64,40 @@ export default function Dashboard() {
     setLinks((prev) => [newLink, ...prev]);
   }
 
-  // 🔑 NEW: update handler for favorites/trash
+  // 🔑 Update handler for favorites, trash, restore, and permanent delete
   function handleLinkUpdated(updatedLink) {
-    setLinks((prev) =>
-      prev.map((l) => (l.id === updatedLink.id ? updatedLink : l))
-    );
+    if (updatedLink.deleted) {
+      // Permanently deleted → remove it from local state immediately
+      setLinks((prev) =>
+        prev.filter((l) => l.id !== updatedLink.id)
+      );
+    } else {
+      // Normal update → replace the existing link
+      setLinks((prev) =>
+        prev.map((l) =>
+          l.id === updatedLink.id ? updatedLink : l
+        )
+      );
+    }
   }
 
   async function handleNewCategory() {
     const name = prompt('Enter a new category name:');
+
     if (!name) return;
 
     const { data, error } = await supabase
       .from('categories')
-      .insert({ user_id: profile.id, name })
+      .insert({
+        user_id: profile.id,
+        name
+      })
       .select()
       .single();
 
-    if (!error) setCategories((prev) => [...prev, data]);
+    if (!error) {
+      setCategories((prev) => [...prev, data]);
+    }
   }
 
   function categoryNameFor(categoryId) {
@@ -78,14 +107,25 @@ export default function Dashboard() {
   // Filtering logic for Favorites, Trash, Categories
   const visibleLinks = links
     .filter((l) => {
-      if (activeCategory === 'favorites') return l.is_favorite;
-      if (activeCategory === 'trash') return l.is_trashed;
-      if (activeCategory) return l.category_id === activeCategory;
-      return !l.is_trashed; // default: show all except trashed
+      if (activeCategory === 'favorites') {
+        return l.is_favorite;
+      }
+
+      if (activeCategory === 'trash') {
+        return l.is_trashed;
+      }
+
+      if (activeCategory) {
+        return l.category_id === activeCategory;
+      }
+
+      return !l.is_trashed;
     })
     .filter((l) => {
       if (!search.trim()) return true;
+
       const q = search.toLowerCase();
+
       return (
         l.name.toLowerCase().includes(q) ||
         l.url.toLowerCase().includes(q) ||
@@ -105,6 +145,7 @@ export default function Dashboard() {
       />
 
       <div className="dashboard-main">
+
         {/* Top Bar */}
         <header className="dashboard-topbar">
           <input
@@ -116,12 +157,19 @@ export default function Dashboard() {
           />
 
           <div className="dashboard-topbar-actions">
-            <button className="add-link-button" onClick={() => setShowAddModal(true)}>
+
+            <button
+              className="add-link-button"
+              onClick={() => setShowAddModal(true)}
+            >
               + Add New Link
             </button>
 
             <div className="theme-selector">
-              <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+              <select
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+              >
                 <option value="violet">Linkie Violet</option>
                 <option value="black">Black</option>
                 <option value="white">White</option>
@@ -130,38 +178,64 @@ export default function Dashboard() {
 
             <div className="dashboard-profile">
               {avatarUrl ? (
-                <img src={avatarUrl} alt="" className="profile-avatar" />
+                <img
+                  src={avatarUrl}
+                  alt=""
+                  className="profile-avatar"
+                />
               ) : (
-                <div className="profile-avatar-fallback">{displayName[0]}</div>
+                <div className="profile-avatar-fallback">
+                  {displayName[0]}
+                </div>
               )}
+
               <span>{displayName}</span>
-              <button className="logout-link" onClick={signOut}>Log out</button>
+
+              <button
+                className="logout-link"
+                onClick={signOut}
+              >
+                Log out
+              </button>
             </div>
+
           </div>
         </header>
 
         {/* Content */}
         <main className="dashboard-content">
           {loading ? (
-            <p className="dashboard-loading">Loading your links...</p>
+            <p className="dashboard-loading">
+              Loading your links...
+            </p>
           ) : visibleLinks.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-state-icon">🔗</div>
+
+              <div className="empty-state-icon">
+                🔗
+              </div>
+
               <h2>
                 {links.length === 0
                   ? `Welcome to Linkie, ${displayName}! 👋`
                   : 'No links found.'}
               </h2>
+
               <p>
                 {links.length === 0
                   ? "You haven't saved any links yet. Start by adding your first link."
                   : 'Try another search or category.'}
               </p>
+
               {links.length === 0 && (
-                <button className="add-link-button" onClick={() => setShowAddModal(true)}>
+                <button
+                  className="add-link-button"
+                  onClick={() => setShowAddModal(true)}
+                >
                   + Add Your First Link
                 </button>
               )}
+
             </div>
           ) : (
             <>
@@ -174,14 +248,18 @@ export default function Dashboard() {
                   ? categoryNameFor(activeCategory)
                   : 'All Links'}
               </h1>
-              <p className="dashboard-subheading">You have {visibleLinks.length} links saved</p>
+
+              <p className="dashboard-subheading">
+                You have {visibleLinks.length} links saved
+              </p>
+
               <div className="link-grid">
                 {visibleLinks.map((link) => (
                   <LinkCard
                     key={link.id}
                     link={link}
                     categoryName={categoryNameFor(link.category_id)}
-                    onLinkUpdated={handleLinkUpdated}  
+                    onLinkUpdated={handleLinkUpdated}
                   />
                 ))}
               </div>
@@ -201,4 +279,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
