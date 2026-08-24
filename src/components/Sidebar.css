@@ -1,14 +1,23 @@
+/* ================================
+   SIDEBAR
+   ================================ */
+
 .sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+  min-height: 100vh;
+  background: #0f0f1a;
+  border-right: 1px solid #1e1e2e;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 24px 18px;
   box-sizing: border-box;
+  color: #eaeaea;
 }
+
+/* ================================
+   BRAND
+   ================================ */
 
 .sidebar-brand {
   display: flex;
@@ -16,24 +25,58 @@
   gap: 8px;
   font-weight: 700;
   font-size: 18px;
-  color: var(--text);
+  color: #ffffff;
 }
+
+.sidebar-logo {
+  font-size: 18px;
+}
+
+.sidebar-title-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar-title {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.sidebar-subtitle {
+  margin-top: 3px;
+  color: #9a9ab8;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* ================================
+   NAVIGATION
+   ================================ */
 
 .sidebar-nav,
 .sidebar-categories {
   margin-top: 20px;
 }
 
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .sidebar-nav-item,
 .sidebar-category-item {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: transparent;
   border: none;
-  color: var(--text);
+  color: #cfcfe8;
   font-size: 14px;
-  padding: 8px 10px;
+  text-align: left;
+  padding: 9px 10px;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -41,101 +84,55 @@
 
 .sidebar-nav-item:hover,
 .sidebar-category-item:hover {
-  background: rgba(108, 76, 255, 0.08);
+  background: rgba(108, 76, 255, 0.15);
 }
 
 .sidebar-nav-item.active,
 .sidebar-category-item.active {
-  background: var(--accent);
-  color: #fff;
-}
-
-.sidebar-new-category {
-  margin-top: 10px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.sidebar-profile {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.sidebar-avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.sidebar-username {
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* ================================
-   DARK SIDEBAR THEME
-   ================================ */
-
-[data-theme="violet"] .sidebar {
-  background: #0f0f1a;
-  border-right: 1px solid #1e1e2e;
-  color: #eaeaea;
-}
-
-[data-theme="violet"] .sidebar-brand {
+  background: #6c4cff;
   color: #ffffff;
 }
 
-[data-theme="violet"] .sidebar-nav-item,
-[data-theme="violet"] .sidebar-category-item {
-  color: #cfcfe8;
-  background: transparent;
-}
+/* ================================
+   CATEGORIES
+   ================================ */
 
-[data-theme="violet"] .sidebar-nav-item:hover,
-[data-theme="violet"] .sidebar-category-item:hover {
-  background: rgba(108, 76, 255, 0.15);
-}
-
-[data-theme="violet"] .sidebar-nav-item.active,
-[data-theme="violet"] .sidebar-category-item.active {
-  background: #6c4cff;
-  color: #fff;
-}
-
-[data-theme="violet"] .sidebar-section-label {
+.sidebar-section-label {
   color: #9a9ab8;
   font-size: 13px;
-  margin-top: 20px;
-  margin-bottom: 8px;
+  margin: 20px 0 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-[data-theme="violet"] .sidebar-new-category {
+.category-count {
+  color: inherit;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.sidebar-new-category {
+  margin-top: 10px;
   background: #6c4cff;
-  color: #fff;
+  color: #ffffff;
   border: none;
-  padding: 8px 10px;
+  padding: 9px 10px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-[data-theme="violet"] .sidebar-new-category:hover {
+.sidebar-new-category:hover {
   background: #5938e8;
+  transform: translateY(-1px);
 }
 
-[data-theme="violet"] .sidebar-upgrade {
+/* ================================
+   UPGRADE CARD
+   ================================ */
+
+.sidebar-upgrade {
   background: #1a1a2e;
   border-radius: 12px;
   padding: 14px;
@@ -144,18 +141,42 @@
   text-align: center;
 }
 
-[data-theme="violet"] .upgrade-btn {
+.upgrade-title {
+  margin: 0 0 6px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.upgrade-desc {
+  margin: 0;
+  color: #a7a7bd;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.upgrade-btn {
   background: #6c4cff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   margin-top: 10px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-[data-theme="violet"] .sidebar-profile {
+.upgrade-btn:hover {
+  background: #5938e8;
+  transform: translateY(-1px);
+}
+
+/* ================================
+   PROFILE
+   ================================ */
+
+.sidebar-profile {
   margin-top: auto;
   display: flex;
   flex-direction: column;
@@ -165,16 +186,40 @@
   border-top: 1px solid #1e1e2e;
 }
 
-[data-theme="violet"] .sidebar-avatar {
+.sidebar-avatar {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-[data-theme="violet"] .sidebar-username {
+.sidebar-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.sidebar-username {
   font-weight: 600;
   color: #eaeaea;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.signout-btn {
+  background: transparent;
+  border: none;
+  color: #9a9ab8;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.signout-btn:hover {
+  color: #ffffff;
 }
 
 /* ================================
@@ -185,7 +230,7 @@
   display: none;
   background: none;
   border: none;
-  color: inherit;
+  color: #ffffff;
   font-size: 20px;
   cursor: pointer;
   margin-left: auto;
@@ -196,7 +241,9 @@
     position: fixed;
     top: 0;
     left: 0;
+    width: 260px;
     height: 100vh;
+    min-height: 100vh;
     z-index: 1000;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
