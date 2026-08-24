@@ -15,8 +15,8 @@ export default function Dashboard() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [search, setSearch] = useState('');
-  const [theme, setTheme] = useState('violet'); // violet, black, white
-  const [sidebarOpen, setSidebarOpen] = useState(false); // NEW: mobile drawer state
+  const [theme, setTheme] = useState('violet');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const displayName =
     profile?.display_name ||
@@ -65,15 +65,12 @@ export default function Dashboard() {
     setLinks((prev) => [newLink, ...prev]);
   }
 
-  // 🔑 Update handler for favorites, trash, restore, and permanent delete
   function handleLinkUpdated(updatedLink) {
     if (updatedLink.deleted) {
-      // Permanently deleted → remove it from local state immediately
       setLinks((prev) =>
         prev.filter((l) => l.id !== updatedLink.id)
       );
     } else {
-      // Normal update → replace the existing link
       setLinks((prev) =>
         prev.map((l) =>
           l.id === updatedLink.id ? updatedLink : l
@@ -105,7 +102,6 @@ export default function Dashboard() {
     return categories.find((c) => c.id === categoryId)?.name;
   }
 
-  // Filtering logic for Favorites, Trash, Categories
   const visibleLinks = links
     .filter((l) => {
       if (activeCategory === 'favorites') {
@@ -142,15 +138,14 @@ export default function Dashboard() {
         activeCategory={activeCategory}
         onSelectCategory={(cat) => {
           setActiveCategory(cat);
-          setSidebarOpen(false); // NEW: close drawer after picking on mobile
+          setSidebarOpen(false);
         }}
         onNewCategory={handleNewCategory}
         profile={profile}
-        isOpen={sidebarOpen}                    // NEW
-        onClose={() => setSidebarOpen(false)}   // NEW
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
-      {/* NEW: dark overlay behind the drawer on mobile, click to close */}
       {sidebarOpen && (
         <div
           className="sidebar-overlay"
@@ -160,10 +155,24 @@ export default function Dashboard() {
 
       <div className="dashboard-main">
 
-        {/* Top Bar */}
         <header className="dashboard-topbar">
 
-          {/* NEW: hamburger button, only visible on mobile via CSS */}
+          {/* MOBILE ONLY: LINKIE BRAND */}
+          <div className="mobile-brand">
+            <div className="mobile-brand-icon">🔗</div>
+
+            <div className="mobile-brand-text">
+              <span className="mobile-brand-title">
+                Linkie
+              </span>
+
+              <small className="mobile-brand-developer">
+                Developed by Christopher Ainoo (M.K.N Tech) ⚡
+              </small>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
           <button
             className="hamburger-btn"
             onClick={() => setSidebarOpen(true)}
@@ -172,6 +181,7 @@ export default function Dashboard() {
             ☰
           </button>
 
+          {/* Search */}
           <input
             className="dashboard-search"
             type="text"
@@ -180,6 +190,7 @@ export default function Dashboard() {
             onChange={(e) => setSearch(e.target.value)}
           />
 
+          {/* Actions */}
           <div className="dashboard-topbar-actions">
 
             <button
@@ -194,9 +205,17 @@ export default function Dashboard() {
                 value={theme}
                 onChange={(e) => setTheme(e.target.value)}
               >
-                <option value="violet">Linkie Violet</option>
-                <option value="black">Black</option>
-                <option value="white">White</option>
+                <option value="violet">
+                  Linkie Violet
+                </option>
+
+                <option value="black">
+                  Black
+                </option>
+
+                <option value="white">
+                  White
+                </option>
               </select>
             </div>
 
@@ -228,11 +247,14 @@ export default function Dashboard() {
 
         {/* Content */}
         <main className="dashboard-content">
+
           {loading ? (
             <p className="dashboard-loading">
               Loading your links...
             </p>
+
           ) : visibleLinks.length === 0 ? (
+
             <div className="empty-state">
 
               <div className="empty-state-icon">
@@ -261,7 +283,9 @@ export default function Dashboard() {
               )}
 
             </div>
+
           ) : (
+
             <>
               <h1 className="dashboard-heading">
                 {activeCategory === 'favorites'
@@ -289,6 +313,7 @@ export default function Dashboard() {
               </div>
             </>
           )}
+
         </main>
       </div>
 
@@ -300,6 +325,7 @@ export default function Dashboard() {
           onLinkAdded={handleLinkAdded}
         />
       )}
+
     </div>
   );
 }
