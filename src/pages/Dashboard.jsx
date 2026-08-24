@@ -16,6 +16,7 @@ export default function Dashboard() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [search, setSearch] = useState('');
   const [theme, setTheme] = useState('violet'); // violet, black, white
+  const [sidebarOpen, setSidebarOpen] = useState(false); // NEW: mobile drawer state
 
   const displayName =
     profile?.display_name ||
@@ -139,15 +140,38 @@ export default function Dashboard() {
         categories={categories}
         links={links}
         activeCategory={activeCategory}
-        onSelectCategory={setActiveCategory}
+        onSelectCategory={(cat) => {
+          setActiveCategory(cat);
+          setSidebarOpen(false); // NEW: close drawer after picking on mobile
+        }}
         onNewCategory={handleNewCategory}
         profile={profile}
+        isOpen={sidebarOpen}                    // NEW
+        onClose={() => setSidebarOpen(false)}   // NEW
       />
+
+      {/* NEW: dark overlay behind the drawer on mobile, click to close */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       <div className="dashboard-main">
 
         {/* Top Bar */}
         <header className="dashboard-topbar">
+
+          {/* NEW: hamburger button, only visible on mobile via CSS */}
+          <button
+            className="hamburger-btn"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+
           <input
             className="dashboard-search"
             type="text"

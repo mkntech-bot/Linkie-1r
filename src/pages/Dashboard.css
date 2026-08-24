@@ -22,8 +22,6 @@
   --accent-hover: #a78bfa;     /* lighter violet for hover */
 }
 
-
-
 /* Black Theme */
 [data-theme="black"] {
   --background: #121212;
@@ -269,9 +267,40 @@
   color: var(--muted);
   line-height: 1.6;
 }
+
 .glow {
   box-shadow: 0 0 10px var(--accent);
 }
+
+
+/* ================================
+   MOBILE MENU (hamburger + overlay)
+   ================================ */
+
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+}
+
 
 /* ================================
    RESPONSIVE
@@ -298,10 +327,6 @@
 }
 
 @media (max-width: 700px) {
-  .dashboard-layout {
-    display: block;
-  }
-
   .dashboard-topbar {
     min-height: auto;
     padding: 15px;
@@ -357,97 +382,7 @@
     min-height: 45vh;
   }
 }
-/* Tablet adjustments */
-@media (max-width: 1024px) {
-  .dashboard-layout {
-    flex-direction: column;
-  }
 
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px 16px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .sidebar-brand {
-    flex: 1;
-  }
-
-  .sidebar-nav,
-  .sidebar-categories,
-  .sidebar-upgrade,
-  .sidebar-profile {
-    display: none; /* hide extra sections on tablet */
-  }
-
-  .dashboard-main {
-    width: 100%;
-  }
-}
-
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  .dashboard-topbar {
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
-  }
-
-  .dashboard-search {
-    width: 100%;
-  }
-
-  .dashboard-topbar-actions {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-  }
-
-  .add-link-button,
-  .theme-selector select,
-  .logout-link {
-    width: 100%;
-  }
-
-  .link-grid {
-    grid-template-columns: 1fr; /* single column cards */
-  }
-}
-/* Tablet adjustments */
-@media (max-width: 1024px) {
-  .dashboard-layout {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px 16px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .sidebar-brand {
-    flex: 1;
-  }
-
-  .sidebar-nav,
-  .sidebar-categories,
-  .sidebar-upgrade,
-  .sidebar-profile {
-    display: none; /* hide extra sections on tablet */
-  }
-
-  .dashboard-main {
-    width: 100%;
-  }
-}
-
-/* Mobile adjustments */
 @media (max-width: 600px) {
   .dashboard-topbar {
     flex-direction: column;

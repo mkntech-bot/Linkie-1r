@@ -7,12 +7,14 @@ export default function Sidebar({
   onSelectCategory,
   onNewCategory,
   profile,
+  isOpen,
+  onClose,
 }) {
   const countFor = (categoryId) =>
     links.filter((l) => l.category_id === categoryId).length;
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
       {/* Brand Header */}
       <div className="sidebar-brand">
         <span className="sidebar-logo">🔗</span>
@@ -20,6 +22,9 @@ export default function Sidebar({
           <span className="sidebar-title">Linkie</span>
           <small className="sidebar-subtitle">Save it. Organize it. Find it.</small>
         </div>
+        <button className="sidebar-close-btn" onClick={onClose} aria-label="Close menu">
+          ✕
+        </button>
       </div>
 
       {/* Navigation */}
