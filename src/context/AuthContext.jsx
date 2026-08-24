@@ -71,13 +71,21 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Sign out
+  // Sign out and return to the Google login page
   async function signOut() {
     const { error } = await supabase.auth.signOut()
 
     if (error) {
+      console.error('Sign out failed:', error)
       throw error
     }
+
+    // Clear local authentication state
+    setSession(null)
+    setProfile(null)
+
+    // Send the user back to the Linkie login page
+    window.location.href = '/'
   }
 
   const value = {
