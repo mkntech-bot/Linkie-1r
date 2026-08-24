@@ -8,21 +8,27 @@
   --text: #1f1f2e;
   --muted: #777789;
   --border: #e8e8ef;
-  --accent: #6c4cff; /* Linkie Violet */
+  --accent: #6c4cff;
 }
 
-/* Violet Theme */
+/* ================================
+   VIOLET THEME
+   ================================ */
+
 [data-theme="violet"] {
-  --background: #0f0f1a;       /* deep dark background */
-  --surface: #1a1a2e;          /* card / sidebar panels */
-  --text: #e5e5e5;             /* main text */
-  --muted: #9ca3af;            /* secondary text */
-  --border: #2d2d44;           /* subtle borders */
-  --accent: #8b5cf6;           /* vivid violet */
-  --accent-hover: #a78bfa;     /* lighter violet for hover */
+  --background: #0f0f1a;
+  --surface: #1a1a2e;
+  --text: #e5e5e5;
+  --muted: #9ca3af;
+  --border: #2d2d44;
+  --accent: #8b5cf6;
+  --accent-hover: #a78bfa;
 }
 
-/* Black Theme */
+/* ================================
+   BLACK THEME
+   ================================ */
+
 [data-theme="black"] {
   --background: #121212;
   --surface: #1e1e1e;
@@ -32,7 +38,10 @@
   --accent: #6c4cff;
 }
 
-/* White Theme */
+/* ================================
+   WHITE THEME
+   ================================ */
+
 [data-theme="white"] {
   --background: #f7f7fb;
   --surface: #ffffff;
@@ -42,6 +51,28 @@
   --accent: #6c4cff;
 }
 
+/* ================================
+   GLOBAL BOX SIZING
+   ================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
 
 /* ================================
    DASHBOARD LAYOUT
@@ -49,23 +80,27 @@
 
 .dashboard-layout {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
   display: flex;
   background: var(--background);
   color: var(--text);
+  overflow-x: hidden;
 }
-
 
 /* ================================
    MAIN AREA
    ================================ */
 
 .dashboard-main {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
-
 
 /* ================================
    TOP BAR
@@ -73,6 +108,8 @@
 
 .dashboard-topbar {
   min-height: 76px;
+  width: 100%;
+  max-width: 100%;
   padding: 0 28px;
   display: flex;
   align-items: center;
@@ -83,9 +120,16 @@
   box-sizing: border-box;
 }
 
+/* ================================
+   SEARCH
+   ================================ */
+
 .dashboard-search {
   width: min(420px, 100%);
+  max-width: 420px;
   height: 42px;
+  min-height: 42px;
+  flex: 0 1 420px;
   padding: 0 16px;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -94,6 +138,7 @@
   font-size: 14px;
   outline: none;
   transition: 0.2s ease;
+  box-sizing: border-box;
 }
 
 .dashboard-search:focus {
@@ -106,7 +151,6 @@
   color: var(--muted);
 }
 
-
 /* ================================
    TOP BAR ACTIONS
    ================================ */
@@ -115,6 +159,7 @@
   display: flex;
   align-items: center;
   gap: 18px;
+  min-width: 0;
 }
 
 .add-link-button {
@@ -139,6 +184,24 @@
   transform: translateY(0);
 }
 
+/* ================================
+   THEME SELECTOR
+   ================================ */
+
+.theme-selector {
+  flex-shrink: 0;
+}
+
+.theme-selector select {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  max-width: 150px;
+}
 
 /* ================================
    PROFILE
@@ -152,11 +215,13 @@
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
+  min-width: 0;
 }
 
 .profile-avatar {
   width: 38px;
   height: 38px;
+  min-width: 38px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -164,6 +229,7 @@
 .profile-avatar-fallback {
   width: 38px;
   height: 38px;
+  min-width: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -187,15 +253,17 @@
   color: var(--accent);
 }
 
-
 /* ================================
    CONTENT
    ================================ */
 
 .dashboard-content {
   flex: 1;
+  width: 100%;
+  max-width: 100%;
   padding: 34px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .dashboard-heading {
@@ -217,17 +285,16 @@
   color: var(--muted);
 }
 
-
 /* ================================
    LINK GRID
    ================================ */
 
 .link-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 18px;
 }
-
 
 /* ================================
    EMPTY STATE
@@ -272,20 +339,20 @@
   box-shadow: 0 0 10px var(--accent);
 }
 
-
 /* ================================
-   MOBILE MENU (hamburger + overlay)
+   MOBILE MENU
    ================================ */
 
 .hamburger-btn {
   display: none;
+  flex-shrink: 0;
   background: none;
   border: none;
   color: var(--text);
-  font-size: 22px;
+  font-size: 26px;
+  line-height: 1;
   cursor: pointer;
-  padding: 4px 8px;
-  flex-shrink: 0;
+  padding: 4px 6px;
 }
 
 .sidebar-overlay {
@@ -295,118 +362,226 @@
   z-index: 999;
 }
 
-@media (max-width: 768px) {
-  .hamburger-btn {
-    display: block;
-  }
-}
-
-
 /* ================================
-   RESPONSIVE
+   TABLET
    ================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .dashboard-topbar {
-    padding: 15px 20px;
-    flex-wrap: wrap;
-  }
-
-  .dashboard-search {
-    flex: 1;
-    min-width: 200px;
+    padding: 0 20px;
+    gap: 14px;
   }
 
   .dashboard-topbar-actions {
-    gap: 12px;
+    gap: 10px;
   }
 
-  .dashboard-content {
-    padding: 25px 20px;
+  .dashboard-profile span {
+    display: none;
   }
 }
 
-@media (max-width: 700px) {
+/* ================================
+   MOBILE
+   ================================ */
+
+@media (max-width: 768px) {
+
+  .dashboard-layout {
+    display: block;
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .dashboard-main {
+    width: 100%;
+    max-width: 100vw;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  /* -----------------------------
+     MOBILE TOP BAR
+     ----------------------------- */
+
   .dashboard-topbar {
+    width: 100%;
+    max-width: 100vw;
     min-height: auto;
-    padding: 15px;
-    gap: 13px;
+    height: auto;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .hamburger-btn {
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .dashboard-search {
+    grid-column: 2;
+    grid-row: 1;
+
     width: 100%;
-    flex-basis: 100%;
+    max-width: none;
+    min-width: 0;
+    height: 44px;
+    min-height: 44px;
+    flex: none;
+    padding: 0 12px;
+    font-size: 14px;
   }
 
+  /* -----------------------------
+     MOBILE ACTIONS
+     ----------------------------- */
+
   .dashboard-topbar-actions {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
     width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .add-link-button {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .theme-selector {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .theme-selector select {
+    width: auto;
+    max-width: 130px;
+    height: 40px;
+    font-size: 12px;
+  }
+
+  .dashboard-profile {
+    flex-shrink: 0;
   }
 
   .dashboard-profile span {
     display: none;
   }
 
+  .profile-avatar,
+  .profile-avatar-fallback {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .logout-link {
+    display: none;
+  }
+
+  /* -----------------------------
+     CONTENT
+     ----------------------------- */
+
   .dashboard-content {
-    padding: 22px 15px;
+    width: 100%;
+    max-width: 100%;
+    padding: 24px 14px;
+    overflow-x: hidden;
   }
 
   .dashboard-heading {
-    font-size: 24px;
+    font-size: 25px;
   }
+
+  .dashboard-subheading {
+    margin-bottom: 20px;
+  }
+
+  /* -----------------------------
+     LINK GRID
+     ----------------------------- */
 
   .link-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-}
-
-@media (max-width: 450px) {
-  .dashboard-topbar-actions {
-    flex-wrap: wrap;
-  }
-
-  .add-link-button {
-    flex: 1;
-  }
-
-  .dashboard-profile {
-    margin-left: auto;
-  }
-
-  .link-grid {
+    width: 100%;
     grid-template-columns: 1fr;
+    gap: 14px;
   }
+
+  /* -----------------------------
+     EMPTY STATE
+     ----------------------------- */
 
   .empty-state {
     min-height: 45vh;
+    padding: 25px 15px;
+  }
+
+  .empty-state h2 {
+    font-size: 21px;
+  }
+
+  .empty-state p {
+    max-width: 100%;
   }
 }
 
-@media (max-width: 600px) {
+/* ================================
+   SMALL PHONES
+   ================================ */
+
+@media (max-width: 450px) {
+
   .dashboard-topbar {
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
+    padding: 10px;
+    gap: 8px;
   }
 
   .dashboard-search {
-    width: 100%;
+    height: 42px;
+    min-height: 42px;
+    font-size: 13px;
   }
 
   .dashboard-topbar-actions {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
+    gap: 6px;
   }
 
-  .add-link-button,
-  .theme-selector select,
-  .logout-link {
-    width: 100%;
+  .add-link-button {
+    padding: 9px 8px;
+    font-size: 12px;
   }
 
-  .link-grid {
-    grid-template-columns: 1fr; /* single column cards */
+  .theme-selector select {
+    max-width: 110px;
+    padding: 0 6px;
+    font-size: 11px;
+  }
+
+  .dashboard-content {
+    padding: 20px 12px;
+  }
+
+  .dashboard-heading {
+    font-size: 23px;
+  }
+
+  .dashboard-subheading {
+    font-size: 13px;
   }
 }
