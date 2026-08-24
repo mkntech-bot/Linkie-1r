@@ -1,3 +1,4 @@
+import { useAuth } from '../context/AuthContext';
 import './Sidebar.css';
 
 export default function Sidebar({
@@ -10,6 +11,8 @@ export default function Sidebar({
   isOpen,
   onClose,
 }) {
+  const { signOut } = useAuth();
+
   const countFor = (categoryId) =>
     links.filter((l) => l.category_id === categoryId).length;
 
@@ -18,11 +21,19 @@ export default function Sidebar({
       {/* Brand Header */}
       <div className="sidebar-brand">
         <span className="sidebar-logo">🔗</span>
+
         <div className="sidebar-title-group">
           <span className="sidebar-title">Linkie</span>
-          <small className="sidebar-subtitle">Save it. Organize it. Find it.</small>
+          <small className="sidebar-subtitle">
+            Save it. Organize it. Find it.
+          </small>
         </div>
-        <button className="sidebar-close-btn" onClick={onClose} aria-label="Close menu">
+
+        <button
+          className="sidebar-close-btn"
+          onClick={onClose}
+          aria-label="Close menu"
+        >
           ✕
         </button>
       </div>
@@ -30,19 +41,27 @@ export default function Sidebar({
       {/* Navigation */}
       <nav className="sidebar-nav">
         <button
-          className={`sidebar-nav-item ${activeCategory === null ? 'active' : ''}`}
+          className={`sidebar-nav-item ${
+            activeCategory === null ? 'active' : ''
+          }`}
           onClick={() => onSelectCategory(null)}
         >
           🏠 All Links
         </button>
+
         <button
-          className={`sidebar-nav-item ${activeCategory === 'favorites' ? 'active' : ''}`}
+          className={`sidebar-nav-item ${
+            activeCategory === 'favorites' ? 'active' : ''
+          }`}
           onClick={() => onSelectCategory('favorites')}
         >
           ⭐ Favorites
         </button>
+
         <button
-          className={`sidebar-nav-item ${activeCategory === 'trash' ? 'active' : ''}`}
+          className={`sidebar-nav-item ${
+            activeCategory === 'trash' ? 'active' : ''
+          }`}
           onClick={() => onSelectCategory('trash')}
         >
           🗑️ Trash
@@ -52,17 +71,26 @@ export default function Sidebar({
       {/* Categories */}
       <div className="sidebar-categories">
         <p className="sidebar-section-label">Categories</p>
+
         {categories.map((cat) => (
           <button
             key={cat.id}
-            className={`sidebar-category-item ${activeCategory === cat.id ? 'active' : ''}`}
+            className={`sidebar-category-item ${
+              activeCategory === cat.id ? 'active' : ''
+            }`}
             onClick={() => onSelectCategory(cat.id)}
           >
             <span>📁 {cat.name}</span>
-            <span className="category-count">{countFor(cat.id)}</span>
+            <span className="category-count">
+              {countFor(cat.id)}
+            </span>
           </button>
         ))}
-        <button className="sidebar-new-category" onClick={onNewCategory}>
+
+        <button
+          className="sidebar-new-category"
+          onClick={onNewCategory}
+        >
           + New Category
         </button>
       </div>
@@ -70,20 +98,36 @@ export default function Sidebar({
       {/* Upgrade Section */}
       <div className="sidebar-upgrade">
         <p className="upgrade-title">Upgrade to Pro</p>
-        <p className="upgrade-desc">Unlock more features and increase your storage.</p>
-        <button className="upgrade-btn">Upgrade Now</button>
+
+        <p className="upgrade-desc">
+          Unlock more features and increase your storage.
+        </p>
+
+        <button className="upgrade-btn">
+          Upgrade Now
+        </button>
       </div>
 
       {/* Profile Section */}
       <div className="sidebar-profile">
         <img
           src={profile?.avatar_url}
-          alt={profile?.display_name}
+          alt={profile?.display_name || 'Profile'}
           className="sidebar-avatar"
         />
+
         <div className="sidebar-user-info">
-          <span className="sidebar-username">{profile?.display_name}</span>
-          <button className="signout-btn">Log out</button>
+          <span className="sidebar-username">
+            {profile?.display_name}
+          </span>
+
+          {/* FIXED: this button now actually calls signOut */}
+          <button
+            className="signout-btn"
+            onClick={signOut}
+          >
+            Log out
+          </button>
         </div>
       </div>
     </aside>
